@@ -1,12 +1,17 @@
 import { NavLink } from "react-router-dom";
 
-const MainHeader = () => {
+const MainHeader = (props) => {
   return (
     <header className="header">
       <nav>
         <ul>
           <li>
-            <NavLink activeClassName="active" to="/" exact>
+            <NavLink
+              onClick={props.onClickHandler}
+              activeClassName="active"
+              to="/"
+              exact
+            >
               Welcome
             </NavLink>
           </li>

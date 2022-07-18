@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 
-// import Movie from "./components/Movie";
 import MainHeader from "./components/MainHeader";
 import Welcome from "./components/Welcome";
 import Aboutus from "./components/Aboutus";
@@ -16,6 +15,7 @@ const SEARCH_API =
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [toggleWelcome, setToggleWelcome] = useState(true);
 
   const fetchMoviesHandler = async (api) => {
     const moviesResp = await fetch(api);
@@ -25,20 +25,22 @@ const App = () => {
   };
 
   useEffect(() => {
-    // if (!searchTerm) {
-    //   fetchMoviesHandler(FEATURED_API);
-    // }
-    fetchMoviesHandler(FEATURED_API);
-  }, []);
+    if (toggleWelcome) {
+      fetchMoviesHandler(FEATURED_API);
+    }
+  }, [toggleWelcome]);
+
+  const onClickHandler = () => {
+    setToggleWelcome(true);
+  };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // if (!searchTerm) {
-    //   fetchMoviesHandler(FEATURED_API);
-    // }
+
     if (searchTerm) {
       fetchMoviesHandler(SEARCH_API + searchTerm);
     }
+    setToggleWelcome(false);
     setSearchTerm("");
   };
 
@@ -48,7 +50,7 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <MainHeader />
+      <MainHeader onClickHandler={onClickHandler} />
       <Route path="/" exact>
         <Welcome
           searchTerm={searchTerm}

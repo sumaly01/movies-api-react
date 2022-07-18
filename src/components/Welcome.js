@@ -19,7 +19,6 @@ const Welcome = (props) => {
         {props.movies.length > 0 &&
           props.movies.map((movie) => <Movie key={movie.id} data={movie} />)}
       </div>
-      ;
     </React.Fragment>
   );
 };
