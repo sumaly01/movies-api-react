@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import { Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
-import Movie from "./components/Movie";
+// import Movie from "./components/Movie";
 import MainHeader from "./components/MainHeader";
-// import Welcome from "./components/Welcome";
-// import Aboutme from "./components/Aboutme";
+import Welcome from "./components/Welcome";
+import Aboutus from "./components/Aboutus";
 
 const FEATURED_API =
   // "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc/&api_key=021d70cc33f1ac0e5e77dab17c489a5e&page=1";
@@ -25,11 +25,17 @@ const App = () => {
   };
 
   useEffect(() => {
+    // if (!searchTerm) {
+    //   fetchMoviesHandler(FEATURED_API);
+    // }
     fetchMoviesHandler(FEATURED_API);
   }, []);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    // if (!searchTerm) {
+    //   fetchMoviesHandler(FEATURED_API);
+    // }
     if (searchTerm) {
       fetchMoviesHandler(SEARCH_API + searchTerm);
     }
@@ -43,29 +49,17 @@ const App = () => {
   return (
     <React.Fragment>
       <MainHeader />
-      {/* <main>
-        <Route path="/welcome">
-          <Welcome />
-        </Route>
-        <Route path="/aboutme">
-          <Aboutme />
-        </Route> */}
-      {/* </main> */}
-      <div className="search-div">
-        <form onSubmit={onSubmitHandler}>
-          <input
-            className="search"
-            type="search"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={onChangeHandler}
-          />
-        </form>
-      </div>
-      <div className="movie-container">
-        {movies.length > 0 &&
-          movies.map((movie) => <Movie key={movie.id} data={movie} />)}
-      </div>
+      <Route path="/" exact>
+        <Welcome
+          searchTerm={searchTerm}
+          movies={movies}
+          onSubmitHandler={onSubmitHandler}
+          onChangeHandler={onChangeHandler}
+        />
+      </Route>
+      <Route path="/aboutus">
+        <Aboutus />
+      </Route>
     </React.Fragment>
   );
 };
